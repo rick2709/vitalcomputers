@@ -205,9 +205,10 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(-14px);
-  transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-              visibility 0.3s;
+  /* Delay hiding so mouse can travel from nav item to panel */
+  transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1) 0.22s,
+              transform 0.25s cubic-bezier(0.22, 1, 0.36, 1) 0.22s,
+              visibility 0s 0.47s;
   border-top: 3px solid transparent;
   border-image: linear-gradient(90deg, #6B21A8, #E5007D) 1;
 }
@@ -216,6 +217,10 @@
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  /* No delay when opening */
+  transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0s;
 }
 
 .nav__mega-left {
