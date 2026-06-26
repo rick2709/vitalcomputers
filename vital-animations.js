@@ -493,10 +493,22 @@
       var btn = form.querySelector('.raq-submit');
       btn.textContent = 'Sending…';
       btn.disabled = true;
-      setTimeout(function () {
-        form.style.display = 'none';
-        success.style.display = 'flex';
-      }, 800);
+      var data = new FormData(form);
+      fetch('mail.php', { method: 'POST', body: data })
+        .then(function (r) { return r.text(); })
+        .then(function (res) {
+          if (res.trim() === 'success') {
+            form.style.display = 'none';
+            success.style.display = 'flex';
+          } else {
+            btn.textContent = 'Try Again';
+            btn.disabled = false;
+          }
+        })
+        .catch(function () {
+          btn.textContent = 'Try Again';
+          btn.disabled = false;
+        });
     });
   }
 

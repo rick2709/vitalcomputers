@@ -483,11 +483,32 @@
 
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const btn = this.querySelector('button[type="submit"]');
-      btn.textContent = 'Message Sent!';
-      btn.style.background = '#22c55e';
-      btn.style.borderColor = '#22c55e';
-      setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; btn.style.borderColor = ''; this.reset(); }, 3500);
+      const form = this;
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      fetch('mail.php', { method: 'POST', body: new FormData(form) })
+        .then(r => r.text())
+        .then(res => {
+          if (res.trim() === 'success') {
+            btn.textContent = 'Message Sent!';
+            btn.style.background = '#22c55e';
+            btn.style.borderColor = '#22c55e';
+            form.reset();
+            setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; btn.style.borderColor = ''; btn.disabled = false; }, 3500);
+          } else {
+            btn.textContent = 'Try Again';
+            btn.style.background = '#ef4444';
+            btn.style.borderColor = '#ef4444';
+            setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; btn.style.borderColor = ''; btn.disabled = false; }, 3000);
+          }
+        })
+        .catch(() => {
+          btn.textContent = 'Try Again';
+          btn.style.background = '#ef4444';
+          btn.style.borderColor = '#ef4444';
+          setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; btn.style.borderColor = ''; btn.disabled = false; }, 3000);
+        });
     });
 
     // Mobile bottom nav pill
