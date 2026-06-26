@@ -10,8 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="vital-animations.css">
 </head>
 <body>
+  <div id="page-transition-overlay"><div class="pto-line"></div></div>
 
   <!-- NAVIGATION -->
   <nav class="nav" id="navbar">
@@ -178,12 +180,12 @@
       <div class="gradient-rule gradient-rule--center"></div>
     </div>
     <div class="testimonials__grid">
-      <div class="tcard">
+      <div class="tcard" data-vs="up" data-vsd="1">
         <span class="tcard__quote-icon" aria-hidden="true">"</span>
         <p class="tcard__text">Vital Computers delivered our full server infrastructure upgrade on schedule and within budget. Their certified engineers understood our compliance requirements from day one and ensured every component met our operational and security standards.</p>
         <div class="tcard__logo">RESERVE BANK OF ZIMBABWE</div>
       </div>
-      <div class="tcard">
+      <div class="tcard" data-vs="up" data-vsd="2">
         <span class="tcard__quote-icon" aria-hidden="true">"</span>
         <p class="tcard__text">From procurement through to post-deployment support, the Vital Computers team has been an invaluable technology partner. Their technical depth and commitment to service continuity set them apart from any vendor we have engaged in Zimbabwe.</p>
         <div class="tcard__logo">UNICEF ZIMBABWE</div>
@@ -328,5 +330,6 @@
       });
     })();
   </script>
+  <script src="vital-animations.js"></script>
 </body>
 </html>

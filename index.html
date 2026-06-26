@@ -10,8 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="vital-animations.css">
 </head>
 <body>
+  <div id="page-transition-overlay"><div class="pto-line"></div></div>
 
   <!-- NAVIGATION -->
   <nav class="nav" id="navbar">
@@ -75,32 +77,32 @@
 
   <!-- VALUE PROPS -->
   <section class="value-props">
-    <p class="value-props__label">Why Vital Computers</p>
-    <h2 class="value-props__heading">Built on Trust. Driven by Technology.</h2>
-    <p class="value-props__sub">Everything we do is designed to give your organisation a reliable, secure, and high-performance technology foundation.</p>
+    <p class="value-props__label" data-vs="up">Why Vital Computers</p>
+    <h2 class="value-props__heading" data-vs="up" data-vsd="1">Built on Trust. Driven by Technology.</h2>
+    <p class="value-props__sub" data-vs="up" data-vsd="2">Everything we do is designed to give your organisation a reliable, secure, and high-performance technology foundation.</p>
     <div class="value-props__grid">
-      <div class="vcard">
+      <div class="vcard" data-vs="up" data-vsd="1">
         <div class="vcard__icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
         </div>
         <h3>Certified &amp; Accredited Partner</h3>
         <p>Recognised for meeting industry standards and delivering trusted, compliant solutions across every engagement.</p>
       </div>
-      <div class="vcard">
+      <div class="vcard" data-vs="up" data-vsd="2">
         <div class="vcard__icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <h3>Nationwide Support</h3>
         <p>Highly qualified technicians supporting desktops, servers, storage, and networking infrastructure across Zimbabwe.</p>
       </div>
-      <div class="vcard">
+      <div class="vcard" data-vs="up" data-vsd="3">
         <div class="vcard__icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
         <h3>Trusted by Leading Institutions</h3>
         <p>Serving the Reserve Bank of Zimbabwe, UNICEF, NMB Bank, ZIMSEC, Parirenyatwa, and ZHI — organisations that demand excellence.</p>
       </div>
-      <div class="vcard">
+      <div class="vcard" data-vs="up" data-vsd="4">
         <div class="vcard__icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
         </div>
@@ -180,7 +182,7 @@
 
   <!-- SPLIT CARD -->
   <section class="split-section" id="about">
-    <div class="split-card">
+    <div class="split-card" data-vs="up">
       <div class="split-card__text">
         <span class="split-card__tag">Why Vital Computers</span>
         <h2>Zimbabwe's Trusted ICT Partner for Over a Decade</h2>
@@ -192,7 +194,7 @@
           <li>Strong procurement &amp; logistics capability</li>
           <li>Proven track record with government, NGOs &amp; corporates</li>
         </ul>
-        <a href="about.html" class="cta-link">
+        <a href="about.html" class="cta-link" data-vs="right">
           Learn about us
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -208,7 +210,7 @@
   <section class="fullbleed">
     <div class="fullbleed__bg" style="background-image:url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=85')"></div>
     <div class="fullbleed__overlay"></div>
-    <div class="fullbleed__content">
+    <div class="fullbleed__content" data-vs="in">
       <h2>Trusted by Government, NGOs &amp; Corporate Zimbabwe</h2>
       <p>From the Reserve Bank of Zimbabwe to UNICEF, NMB Bank, ZIMSEC, Parirenyatwa Hospital, and ZHI — we have earned the confidence of institutions that cannot afford to compromise on performance, security, or reliability.</p>
       <a href="#contact" class="btn btn--pink">Request a Quote</a>
@@ -223,12 +225,12 @@
       <div class="gradient-rule gradient-rule--center"></div>
     </div>
     <div class="testimonials__grid">
-      <div class="tcard">
+      <div class="tcard" data-vs="up" data-vsd="1">
         <span class="tcard__quote-icon" aria-hidden="true">"</span>
         <p class="tcard__text">Vital Computers delivered our full server infrastructure upgrade on schedule and within budget. Their certified engineers understood our compliance requirements from day one and ensured every component met our operational and security standards.</p>
         <div class="tcard__logo">RESERVE BANK OF ZIMBABWE</div>
       </div>
-      <div class="tcard">
+      <div class="tcard" data-vs="up" data-vsd="2">
         <span class="tcard__quote-icon" aria-hidden="true">"</span>
         <p class="tcard__text">From procurement through to post-deployment support, the Vital Computers team has been an invaluable technology partner. Their technical depth and commitment to service continuity set them apart from any vendor we have engaged in Zimbabwe.</p>
         <div class="tcard__logo">UNICEF ZIMBABWE</div>
@@ -507,5 +509,6 @@
       });
     })();
   </script>
+  <script src="vital-animations.js"></script>
 </body>
 </html>
