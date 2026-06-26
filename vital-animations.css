@@ -355,3 +355,224 @@
   .nav__mega-panel { display: none !important; }
   .mega-chevron { display: none; }
 }
+
+/* ============================================================
+   QUOTE REQUEST MODAL
+   ============================================================ */
+#raq-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0s 0.3s;
+}
+
+#raq-backdrop.raq-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s;
+}
+
+#raq-modal {
+  background: #fff;
+  border-radius: 20px;
+  max-width: 620px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(229, 0, 125, 0.3) transparent;
+}
+
+#raq-backdrop.raq-open #raq-modal {
+  transform: scale(1) translateY(0);
+}
+
+/* Dark header strip */
+.raq-header {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a0a14 100%);
+  border-radius: 20px 20px 0 0;
+  padding: 36px 44px 32px;
+  margin-bottom: 0;
+}
+
+/* Form body */
+#raqForm,
+#raq-success {
+  padding: 32px 44px 40px;
+}
+
+#raq-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  z-index: 1;
+}
+#raq-close:hover {
+  background: rgba(229, 0, 125, 0.25);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.raq-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #E5007D;
+  margin-bottom: 8px;
+}
+
+.raq-header h2 {
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+
+.raq-desc {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.raq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.raq-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.raq-grid .raq-field { margin-bottom: 0; }
+
+.raq-field label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.raq-req { color: #E5007D; }
+
+.raq-field input,
+.raq-field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e6e6e6;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1a1a1a;
+  background: #fafafa;
+  transition: border-color 0.2s, background 0.2s;
+  outline: none;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+.raq-field input::placeholder,
+.raq-field textarea::placeholder {
+  color: #aaa;
+}
+
+.raq-field input:focus,
+.raq-field textarea:focus {
+  border-color: #E5007D;
+  background: #fff;
+}
+
+.raq-field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.raq-submit {
+  width: 100%;
+  margin-top: 8px;
+  justify-content: center;
+  padding: 14px !important;
+  font-size: 15px;
+}
+
+#raq-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.raq-success-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(229, 0, 125, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.raq-success-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+#raq-success h3 {
+  color: #1a1a1a;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+}
+
+#raq-success p {
+  color: #666;
+  font-size: 15px;
+  margin: 0;
+}
+
+.raq-close-success {
+  margin-top: 8px;
+}
+
+@media (max-width: 560px) {
+  .raq-grid { grid-template-columns: 1fr; }
+  .raq-header { padding: 28px 24px 24px; border-radius: 16px 16px 0 0; }
+  #raqForm, #raq-success { padding: 24px 24px 32px; }
+  #raq-modal { border-radius: 16px; }
+}

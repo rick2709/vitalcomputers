@@ -388,11 +388,138 @@
   }
 
   // ============================================================
+  // QUOTE REQUEST MODAL
+  // ============================================================
+  function buildQuoteModal() {
+    if (document.getElementById('raq-backdrop')) return;
+
+    var el = document.createElement('div');
+    el.id = 'raq-backdrop';
+    el.setAttribute('role', 'presentation');
+    el.innerHTML =
+      '<div id="raq-modal" role="dialog" aria-modal="true" aria-labelledby="raq-title">' +
+        '<button id="raq-close" aria-label="Close dialog">×</button>' +
+        '<div class="raq-header">' +
+          '<p class="raq-label">Get in Touch</p>' +
+          '<h2 id="raq-title">Request a Quote</h2>' +
+          '<p class="raq-desc">Tell us about your technology needs and our team will respond within 24 hours.</p>' +
+        '</div>' +
+        '<form id="raqForm" novalidate>' +
+          '<div class="raq-grid">' +
+            '<div class="raq-field">' +
+              '<label for="raq-name">Full Name <span class="raq-req">*</span></label>' +
+              '<input type="text" id="raq-name" name="name" placeholder="Your full name" required>' +
+            '</div>' +
+            '<div class="raq-field">' +
+              '<label for="raq-company">Company / Organisation</label>' +
+              '<input type="text" id="raq-company" name="company" placeholder="Organisation name">' +
+            '</div>' +
+            '<div class="raq-field">' +
+              '<label for="raq-email">Email Address <span class="raq-req">*</span></label>' +
+              '<input type="email" id="raq-email" name="email" placeholder="your@email.com" required>' +
+            '</div>' +
+            '<div class="raq-field">' +
+              '<label for="raq-phone">Phone Number</label>' +
+              '<input type="tel" id="raq-phone" name="phone" placeholder="+263 ...">' +
+            '</div>' +
+          '</div>' +
+          '<div class="raq-field">' +
+            '<label for="raq-message">What are your technology needs?</label>' +
+            '<textarea id="raq-message" name="message" placeholder="Describe your requirements, infrastructure needs, or products you\'re interested in..."></textarea>' +
+          '</div>' +
+          '<button type="submit" class="btn btn--pink raq-submit">Send Request</button>' +
+        '</form>' +
+        '<div id="raq-success">' +
+          '<div class="raq-success-icon">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="#E5007D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
+              '<circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/>' +
+            '</svg>' +
+          '</div>' +
+          '<h3>Request Sent!</h3>' +
+          '<p>Thank you — our team will reach out within 24 hours.</p>' +
+          '<button class="btn btn--nav-outline raq-close-success">Close</button>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(el);
+
+    var backdrop = el;
+    var modal = document.getElementById('raq-modal');
+    var closeBtn = document.getElementById('raq-close');
+    var form = document.getElementById('raqForm');
+    var success = document.getElementById('raq-success');
+    var lastFocus = null;
+
+    function openModal() {
+      lastFocus = document.activeElement;
+      backdrop.classList.add('raq-open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () {
+        var first = modal.querySelector('input');
+        if (first) first.focus();
+      }, 120);
+    }
+
+    function closeModal() {
+      backdrop.classList.remove('raq-open');
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+      setTimeout(function () {
+        form.reset();
+        form.style.display = '';
+        success.style.display = 'none';
+        var btn = form.querySelector('.raq-submit');
+        if (btn) { btn.textContent = 'Send Request'; btn.disabled = false; }
+      }, 320);
+    }
+
+    window.openQuoteModal = openModal;
+
+    closeBtn.addEventListener('click', closeModal);
+
+    var closeSuccess = success.querySelector('.raq-close-success');
+    if (closeSuccess) closeSuccess.addEventListener('click', closeModal);
+
+    backdrop.addEventListener('click', function (e) {
+      if (e.target === backdrop) closeModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && backdrop.classList.contains('raq-open')) closeModal();
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('.raq-submit');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      setTimeout(function () {
+        form.style.display = 'none';
+        success.style.display = 'flex';
+      }, 800);
+    });
+  }
+
+  function initQuoteModalTriggers() {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      if (a.textContent.trim() === 'Request a Quote') {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof window.openQuoteModal === 'function') window.openQuoteModal();
+      }
+    }, true);
+  }
+
+  // ============================================================
   // INIT
   // ============================================================
   document.addEventListener('DOMContentLoaded', function () {
     insertOverlay();
     buildMegaNav();
+    buildQuoteModal();
+    initQuoteModalTriggers();
     initScrollAnimations();
     initRipples();
     initNavbarScroll();
