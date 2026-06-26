@@ -25,13 +25,20 @@ $body .= "Email:   $email\n";
 if ($phone)   $body .= "Phone:   $phone\n";
 $body .= "\nMessage:\n$message\n";
 
-$headers  = "From: noreply@vitalcomputers.co.zw\r\n";
+// Use the destination address as From — most cPanel servers require
+// the From to be a real mailbox on the same domain
+$headers  = "From: $to\r\n";
 $headers .= "Reply-To: $email\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion();
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-if (mail($to, $subject, $body, $headers)) {
+$sent = mail($to, $subject, $body, $headers);
+
+if ($sent) {
     echo 'success';
 } else {
+    // Log the PHP error so you can check it in cPanel Error Logs
+    $err = error_get_last();
+    error_log('mail.php failed: ' . ($err['message'] ?? 'unknown error'));
     http_response_code(500);
     echo 'error';
 }
