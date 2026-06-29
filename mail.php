@@ -1,10 +1,8 @@
 <?php
-// ── PHPMailer SMTP config ─────────────────────────────────────
-// Fill in your cPanel email credentials before uploading
-define('SMTP_HOST',  'mail.vitalcomputers.co.zw'); // or try: localhost
-define('SMTP_USER',  'sales@vitalcomputers.co.zw');
-define('SMTP_PASS',  'YOUR_EMAIL_PASSWORD_HERE');   // ← change this
-define('SMTP_PORT',  587);
+// ── PHPMailer via cPanel local relay ─────────────────────────
+define('SMTP_HOST',  'localhost');
+define('SMTP_PORT',  25);
+define('MAIL_FROM',  'sales@vitalcomputers.co.zw');
 define('MAIL_TO',    'sales@vitalcomputers.co.zw');
 // ─────────────────────────────────────────────────────────────
 
@@ -19,7 +17,7 @@ $email   = filter_var(trim($_POST['email']   ?? ''), FILTER_SANITIZE_EMAIL);
 $phone   = strip_tags(trim($_POST['phone']   ?? ''));
 $message = strip_tags(trim($_POST['message'] ?? ''));
 
-if (empty($name) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if (empty($name) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     exit('invalid');
 }
@@ -30,7 +28,6 @@ require_once __DIR__ . '/phpmailer/PHPMailer.php';
 require_once __DIR__ . '/phpmailer/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 $mail = new PHPMailer(true);
@@ -38,13 +35,12 @@ $mail = new PHPMailer(true);
 try {
     $mail->isSMTP();
     $mail->Host       = SMTP_HOST;
-    $mail->SMTPAuth   = true;
-    $mail->Username   = SMTP_USER;
-    $mail->Password   = SMTP_PASS;
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = SMTP_PORT;
+    $mail->SMTPAuth   = false;
+    $mail->SMTPSecure = '';
+    $mail->SMTPAutoTLS = false;
 
-    $mail->setFrom(SMTP_USER, 'Vital Computers Website');
+    $mail->setFrom(MAIL_FROM, 'Vital Computers Website');
     $mail->addAddress(MAIL_TO, 'Vital Computers Sales');
     $mail->addReplyTo($email, $name);
 
@@ -55,7 +51,7 @@ try {
     if ($company) $body .= "Company: $company\n";
     $body .= "Email:   $email\n";
     if ($phone)   $body .= "Phone:   $phone\n";
-    $body .= "\nMessage:\n$message\n";
+    if ($message) $body .= "\nMessage:\n$message\n";
 
     $mail->Body = $body;
 
@@ -63,7 +59,8 @@ try {
     echo 'success';
 
 } catch (Exception $e) {
-    error_log('PHPMailer error: ' . $mail->ErrorInfo);
+    $errMsg = $mail->ErrorInfo;
+    file_put_contents(__DIR__ . '/mail-debug.log', date('Y-m-d H:i:s') . ' — ' . $errMsg . "\n", FILE_APPEND);
     http_response_code(500);
-    echo 'error';
+    echo 'error: ' . $errMsg;
 }
